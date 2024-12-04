@@ -3,22 +3,22 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import mapHandler from './api/map.js';
-import ipinfoHandler from './api/ipinfo.js';
-import ipapicomHandler from './api/ipapicom.js';
-import keycdnHandler from './api/keycdn.js';
-import ipCheckingHandler from './api/ipchecking.js';
-import ipsbHandler from './api/ipsb.js';
-import cfHander from './api/cfradar.js';
-import validateConfigs from './api/configs.js';
-import dnsResolver from './api/dnsresolver.js';
+import mapHandler from './apis/map.js';
+import ipinfoHandler from './apis/ipinfo.js';
+import ipapicomHandler from './apis/ipapicom.js';
+import keycdnHandler from './apis/keycdn.js';
+import ipCheckingHandler from './apis/ipchecking.js';
+import ipsbHandler from './apis/ipsb.js';
+import cfHander from './apis/cfradar.js';
+import validateConfigs from './apis/configs.js';
+import dnsResolver from './apis/dnsresolver.js';
 import rateLimit from 'express-rate-limit';
 import { slowDown } from 'express-slow-down'
-import whois from './api/whois.js';
-import ipapiisHandler from './api/ipapiis.js';
-import invisibilitytestHandler from './api/invisibilitytest.js';
-import macChecker from './api/macchecker.js';
-import maxmindHandler from './api/maxmind.js';
+import whois from './apis/whois.js';
+import ipapiisHandler from './apis/ipapiis.js';
+import invisibilitytestHandler from './apis/invisibilitytest.js';
+import macChecker from './apis/macchecker.js';
+import maxmindHandler from './apis/maxmind.js';
 
 dotenv.config();
 
@@ -114,34 +114,34 @@ const speedLimiter = slowDown({
 
 // 如果 rateLimitSet 为 0，则不启用限流
 if (rateLimitSet !== 0) {
-    app.use('/api', rateLimiter);
+    app.use('/apis', rateLimiter);
     console.log('Rate limiter is enabled, limit:', rateLimitSet, 'requests per 60 minutes');
 }
 
 // 如果 deleyAfter 为 0，则不启用延迟
 if (speedLimitSet !== 0) {
-    app.use('/api', speedLimiter);
+    app.use('/apis', speedLimiter);
     console.log('Speed limiter is enabled, slowing down after:', speedLimitSet, 'requests');
 }
 
 
 // APIs
-app.get('/api/map', mapHandler);
-app.get('/api/ipinfo', ipinfoHandler);
-app.get('/api/ipapicom', ipapicomHandler);
-app.get('/api/keycdn', keycdnHandler);
-app.get('/api/ipchecking', ipCheckingHandler);
-app.get('/api/ipsb', ipsbHandler);
-app.get('/api/cfradar', cfHander);
-app.get('/api/dnsresolver', dnsResolver);
-app.get('/api/whois', whois);
-app.get('/api/ipapiis', ipapiisHandler);
-app.get('/api/invisibility', invisibilitytestHandler);
-app.get('/api/macchecker', macChecker);
-app.get('/api/maxmind', maxmindHandler);
+app.get('/apis/map', mapHandler);
+app.get('/apis/ipinfo', ipinfoHandler);
+app.get('/apis/ipapicom', ipapicomHandler);
+app.get('/apis/keycdn', keycdnHandler);
+app.get('/apis/ipchecking', ipCheckingHandler);
+app.get('/apis/ipsb', ipsbHandler);
+app.get('/apis/cfradar', cfHander);
+app.get('/apis/dnsresolver', dnsResolver);
+app.get('/apis/whois', whois);
+app.get('/apis/ipapiis', ipapiisHandler);
+app.get('/apis/invisibility', invisibilitytestHandler);
+app.get('/apis/macchecker', macChecker);
+app.get('/apis/maxmind', maxmindHandler);
 
 // 使用查询参数处理所有配置请求
-app.get('/api/configs', validateConfigs);
+app.get('/apis/configs', validateConfigs);
 
 // 设置静态文件服务
 const __filename = fileURLToPath(import.meta.url);
