@@ -135,7 +135,7 @@ export default defineConfig({
     host: '0.0.0.0',
     port: frontEndPort,
     proxy: {
-      '/api': `http://localhost:${backEndPort}`
+      '/apis': `http://localhost:${backEndPort}`
     }
   }
 })
