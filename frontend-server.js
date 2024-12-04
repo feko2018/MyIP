@@ -15,8 +15,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // API 请求代理到后端服务
-frontendApp.use('/api', createProxyMiddleware({ 
-  target: `http://localhost:${backEndPort}/api`,
+frontendApp.use('/apis', createProxyMiddleware({ 
+  target: `http://localhost:${backEndPort}/apis`,
   changeOrigin: true
 }));
 
